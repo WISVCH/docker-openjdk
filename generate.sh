@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for tag in 8-jdk 8-jre 8-jre-slim 9-jdk 9-jre 9-jre-slim; do
+for tag in 8-jdk 8-jre 8-jre-slim 10-jdk 10-jre 10-jre-slim; do
 	echo $tag
 	mkdir -p $tag
 	cat > $tag/Dockerfile <<EOF

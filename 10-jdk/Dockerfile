@@ -1,4 +1,4 @@
-FROM openjdk:9-jre-slim
+FROM openjdk:10-jdk
 
 ADD https://ch.tudelft.nl/certs/wisvch.crt /usr/local/share/ca-certificates/wisvch.crt
 RUN chmod 0644 /usr/local/share/ca-certificates/wisvch.crt && \
