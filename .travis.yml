@@ -1,0 +1,40 @@
+language: minimal
+services:
+  - docker
+env:
+  - TAG=8-jdk
+  - TAG=8-jre
+  - TAG=8-jre-slim
+  - TAG=10-jdk
+  - TAG=10-jre
+  - TAG=10-jre-slim
+  - TAG=11-jdk
+  - TAG=11-jre
+  - TAG=11-jre-slim
+script:
+  - cd $TAG
+  - docker build --no-cache --pull -t wisvch/openjdk:$TAG -t quay.io/wisvch/openjdk:$TAG .
+deploy:
+  - provider: script
+    script: >-
+      sh -c '
+      docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
+      echo pushing to wisvch/openjdk:$TAG;
+      docker push wisvch/openjdk:$TAG;
+      '
+    on:
+      branch: master
+  - provider: script
+    script: >-
+      sh -c '
+      docker login -u "$QUAY_USERNAME" -p "$QUAY_PASSWORD" quay.io;
+      echo pushing to quay.io/wisvch/openjdk:$TAG;
+      docker push quay.io/wisvch/openjdk:$TAG;
+      '
+    on:
+      branch: master
+notifications:
+  email: false
+  slack:
+    rooms:
+      secure: pRYmEj1nkASaGBQxsv2uBb5dcgFUzdkysiXbDbJaRK8vFrlGv3y7AsfdNDEfl7OTSefslICN2ny2hpVB/9hfDvFb8Xex5Q9lw/F2VTrIIcf7MvqSCGHE5z8hW4SKS37IZvFVzLod1W0Ro4eBB1iDdxsPcIv7tGRG6hRZlLtMGnztR96tSYwfjMcUqxpDtKzH5tDjBgbStjXcYIzRHNvi416ZBRaH1wyrbECZ76/TibDv9cti/70xBCp8TIPEpceMrAK2+uh3yF1QmxWNQu7VTTysZyJBMRbXBMRjiS/GFT+HzXZkccev4YXCaeMIzP42RfuDFIHty55uRJ3s5rzKN0M2DzGyRzI7/rCoOZdRgCQuQokz5lA+kap+D2PuivNpFV817XJOBlnZLjK59JL7y9SS40dEEK9jzL+Ln9QR2DJJs7HyXqLgpKNAzFr1NcBZaS2oXXkfK5eClrL5QfqGdT1EFAi9u24nJ0hz0bot9gFEfr7xeAefQvkaZ1PPYr2FNB6+gm2cHSUj4YFqqaJ7SBuwAaEmQ7lr1s+hkcM7UIsWDTO5iTriTjcznW5Quv9AtvYuN+VTTa9nraenB52m4s27SGSkzDqgJ3yJvLAc8QZGFQqId1G6iBIcXEbSIjdK+trK4DQ9IrriggdLaXuDRlwCJ/0SQ+uXpqMdmSO2pVI=
