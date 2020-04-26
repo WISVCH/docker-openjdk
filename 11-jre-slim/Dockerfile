@@ -1,4 +1,4 @@
-FROM openjdk:11-jre-slim
+FROM openjdk:11-jre-slim-buster
 
 ADD https://ch.tudelft.nl/certs/wisvch.crt /usr/local/share/ca-certificates/wisvch.crt
 RUN chmod 0644 /usr/local/share/ca-certificates/wisvch.crt && \

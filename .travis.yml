@@ -5,12 +5,10 @@ env:
   - TAG=8-jdk
   - TAG=8-jre
   - TAG=8-jre-slim
-  - TAG=10-jdk
-  - TAG=10-jre
-  - TAG=10-jre-slim
   - TAG=11-jdk
   - TAG=11-jre
   - TAG=11-jre-slim
+  - TAG=14-jdk
 script:
   - cd $TAG
   - docker build --no-cache --pull -t wisvch/openjdk:$TAG -t quay.io/wisvch/openjdk:$TAG .
